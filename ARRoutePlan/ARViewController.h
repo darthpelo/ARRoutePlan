@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ARViewController : UIViewController
+@interface ARViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, weak) IBOutlet UITableView *formTableView;
+
+@property (nonatomic, weak) IBOutlet UIButton *searchButton;
+
+- (IBAction)searchButtonPressed:(id)sender;
 
 @end

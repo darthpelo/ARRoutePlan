@@ -21,6 +21,10 @@
 		BEC49DA01832C2A100BA941F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC49D821832C2A000BA941F /* UIKit.framework */; };
 		BEC49DA81832C2A100BA941F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEC49DA61832C2A100BA941F /* InfoPlist.strings */; };
 		BEC49DAA1832C2A100BA941F /* ARRoutePlanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC49DA91832C2A100BA941F /* ARRoutePlanTests.m */; };
+		BEC49DBA1832CAFC00BA941F /* ARSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC49DB91832CAFC00BA941F /* ARSearchViewController.m */; };
+		BEC49DBD1832CB1800BA941F /* ARSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC49DBC1832CB1800BA941F /* ARSearchCell.m */; };
+		BEC49DC01832CB4300BA941F /* ARLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC49DBF1832CB4300BA941F /* ARLocationCell.m */; };
+		BEC49DC31832CB5300BA941F /* ARDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC49DC21832CB5300BA941F /* ARDateCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,14 @@
 		BEC49DA51832C2A100BA941F /* ARRoutePlanTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ARRoutePlanTests-Info.plist"; sourceTree = "<group>"; };
 		BEC49DA71832C2A100BA941F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BEC49DA91832C2A100BA941F /* ARRoutePlanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARRoutePlanTests.m; sourceTree = "<group>"; };
+		BEC49DB81832CAFC00BA941F /* ARSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSearchViewController.h; sourceTree = "<group>"; };
+		BEC49DB91832CAFC00BA941F /* ARSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSearchViewController.m; sourceTree = "<group>"; };
+		BEC49DBB1832CB1800BA941F /* ARSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSearchCell.h; sourceTree = "<group>"; };
+		BEC49DBC1832CB1800BA941F /* ARSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSearchCell.m; sourceTree = "<group>"; };
+		BEC49DBE1832CB4300BA941F /* ARLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARLocationCell.h; sourceTree = "<group>"; };
+		BEC49DBF1832CB4300BA941F /* ARLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARLocationCell.m; sourceTree = "<group>"; };
+		BEC49DC11832CB5300BA941F /* ARDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARDateCell.h; sourceTree = "<group>"; };
+		BEC49DC21832CB5300BA941F /* ARDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARDateCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +124,7 @@
 		BEC49D841832C2A000BA941F /* ARRoutePlan */ = {
 			isa = PBXGroup;
 			children = (
+				BEC49DB31832CAD800BA941F /* Classes */,
 				BEC49D8D1832C2A100BA941F /* ARAppDelegate.h */,
 				BEC49D8E1832C2A100BA941F /* ARAppDelegate.m */,
 				BEC49D901832C2A100BA941F /* Main.storyboard */,
@@ -150,6 +163,53 @@
 				BEC49DA61832C2A100BA941F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BEC49DB31832CAD800BA941F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BEC49DB41832CAD800BA941F /* Calendar */,
+				BEC49DB51832CAD800BA941F /* MenuCells */,
+				BEC49DB61832CAD800BA941F /* SearchTrip */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		BEC49DB41832CAD800BA941F /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		BEC49DB51832CAD800BA941F /* MenuCells */ = {
+			isa = PBXGroup;
+			children = (
+				BEC49DBE1832CB4300BA941F /* ARLocationCell.h */,
+				BEC49DBF1832CB4300BA941F /* ARLocationCell.m */,
+				BEC49DC11832CB5300BA941F /* ARDateCell.h */,
+				BEC49DC21832CB5300BA941F /* ARDateCell.m */,
+			);
+			path = MenuCells;
+			sourceTree = "<group>";
+		};
+		BEC49DB61832CAD800BA941F /* SearchTrip */ = {
+			isa = PBXGroup;
+			children = (
+				BEC49DB71832CAD800BA941F /* Cell */,
+				BEC49DB81832CAFC00BA941F /* ARSearchViewController.h */,
+				BEC49DB91832CAFC00BA941F /* ARSearchViewController.m */,
+			);
+			path = SearchTrip;
+			sourceTree = "<group>";
+		};
+		BEC49DB71832CAD800BA941F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				BEC49DBB1832CB1800BA941F /* ARSearchCell.h */,
+				BEC49DBC1832CB1800BA941F /* ARSearchCell.m */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,8 +311,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC49D8B1832C2A100BA941F /* main.m in Sources */,
+				BEC49DC01832CB4300BA941F /* ARLocationCell.m in Sources */,
 				BEC49D951832C2A100BA941F /* ARViewController.m in Sources */,
+				BEC49DC31832CB5300BA941F /* ARDateCell.m in Sources */,
 				BEC49D8F1832C2A100BA941F /* ARAppDelegate.m in Sources */,
+				BEC49DBA1832CAFC00BA941F /* ARSearchViewController.m in Sources */,
+				BEC49DBD1832CB1800BA941F /* ARSearchCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +525,7 @@
 				BEC49DAF1832C2A100BA941F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BEC49DB01832C2A100BA941F /* Build configuration list for PBXNativeTarget "ARRoutePlanTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +534,7 @@
 				BEC49DB21832C2A100BA941F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
