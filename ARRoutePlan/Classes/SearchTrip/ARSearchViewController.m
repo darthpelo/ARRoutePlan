@@ -16,10 +16,13 @@
     UITableView *_tableView;
     NSMutableArray *_tagsInSearch;
     
-    NSMutableArray *positionList;
+    NSArray *_positionsList;
+    NSMutableArray *_positionsInSearch;
     
     BOOL positionsListReady;
     BOOL serverRequestEnd;
+    
+    CLLocationManager *_locationManager;
 }
 
 @end
@@ -40,7 +43,7 @@
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view setBackgroundColor:UIColorFromRGB(0x457FA5)];
 	
     searchView = [[ARSearchBar alloc] initWithFrame:CGRectMake(0, 20, 320, 46)];
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
@@ -57,37 +60,46 @@
     
     _tableView.dataSource = self;
     _tableView.delegate = self;
-
+    [_tableView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:_tableView];
     
-    positionList = [[NSMutableArray alloc] init];
+    // LocationManager
+	_locationManager = [[CLLocationManager alloc] init];
+    _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    _locationManager.distanceFilter = 200;
+    _locationManager.delegate = self;
+    [_locationManager startUpdatingLocation];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
+    [searchView becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [_locationManager stopUpdatingLocation];
 }
 
-#pragma mark SearchBar delegate
+
+#pragma mark - SearchBar delegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    if ([searchView getSearchBarText].length == 3 && serverRequestEnd) {
+    if ([searchView getSearchBarText].length == 2 && serverRequestEnd && !positionsListReady) {
         serverRequestEnd = NO;
         ARNetworkManagment *netManager = [ARNetworkManagment sharedManager];
-        [netManager getPositionList:[searchView getSearchBarText] success:^(id responsedData) {
-            NSLog(@"%@", responsedData);
+        [netManager getPositionList:[[searchView getSearchBarText] lowercaseString] success:^(id responsedData) {
             ARFindPosition *finder = [ARFindPosition sharedManager];
-            [finder findNearestPosition:responsedData success:^(id responsedData) {
-                positionList = [[NSMutableArray alloc] initWithArray:responsedData];
+            [finder findNearestPosition:responsedData userCoord:(CLLocationCoordinate2D)_locationManager.location.coordinate success:^(id responsedData) {
+                _positionsList = [[NSArray alloc] initWithArray:responsedData];
+                _positionsInSearch = [NSMutableArray arrayWithArray:_positionsList];
                 serverRequestEnd = YES;
                 positionsListReady = YES;
+                [_tableView reloadData];
             } failure:^(id responsedData) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Error occured!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
@@ -100,25 +112,28 @@
             serverRequestEnd = YES;
             positionsListReady = NO;
         }];
-    } else if ([searchView getSearchBarText].length > 3 && positionsListReady) {
+    } else if ([searchView getSearchBarText].length >= 2 && positionsListReady) {
         ARFindPosition *finder = [ARFindPosition sharedManager];
-        [finder findNearestPosition:positionList success:^(id responsedData) {
-            positionList = [[NSMutableArray alloc] initWithArray:responsedData];
-        } failure:^(id responsedData) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Error occured!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            positionsListReady = NO;
+        [finder filterPositions:_positionsList byString:[searchView getSearchBarText] result:^(id responsedData) {
+            _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
+            [_tableView reloadData];
         }];
+    } else if (positionsListReady && [searchView getSearchBarText].length < 2) {
+        [_positionsInSearch removeAllObjects];
+        _positionsList = nil;
+        positionsListReady = NO;
+        serverRequestEnd = YES;
+        [_tableView reloadData];
     }
-
-    [_tableView reloadData];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [self dismissViewControllerAnimated:YES completion:^(void){
-        [positionList removeAllObjects];
+        _positionsList = nil;
+        [_positionsInSearch removeAllObjects];
         [_tableView reloadData];
+        [searchView resetSearchBarText];
     }];
 }
 
@@ -133,24 +148,30 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return positionList.count;
+    return _positionsInSearch.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
     }
-
+    
+    NSDictionary *position = [_positionsInSearch objectAtIndex:indexPath.row];
+    cell.textLabel.text = position[@"name"];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    self.selectPosition([_positionsInSearch objectAtIndex:indexPath.row]);
+    [self dismissViewControllerAnimated:YES completion:^{
+        [_positionsInSearch removeAllObjects];
+        [_tableView reloadData];
+        [searchView resetSearchBarText];
+    }];
 }
 
 @end

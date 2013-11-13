@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface ARFindPosition : NSObject
 
 + (id)sharedManager;
-- (void)findNearestPosition:(NSMutableArray *)positions success:(void(^)(id responsedData))success failure:(void(^)(id responsedData))failure;
+
+- (void)findNearestPosition:(NSMutableArray *)positions userCoord:(CLLocationCoordinate2D)coord success:(void(^)(id responsedData))success failure:(void(^)(id responsedData))failure;
+
+- (void)filterPositions:(NSArray *)positions byString:(NSString *)string result:(void(^)(id responsedData))block;
 
 @end

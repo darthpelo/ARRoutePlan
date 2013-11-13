@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    self.searchButton.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,7 +36,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)searchButtonPressed:(id)sende
+- (IBAction)searchButtonPressed:(id)sender
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention"
                                                     message:@"Search function isn't impelement yet"
@@ -45,6 +45,25 @@
                                           otherButtonTitles:nil
                           ];
     [alert show];
+}
+
+- (void)setStartPosition:(NSDictionary *)pos
+{
+    startTrip = pos[@"name"];
+    [self.formTableView reloadData];
+    [self checkSearchButtonStatus];
+}
+
+- (void)setEndPosition:(NSDictionary *)pos
+{
+    endTrip = pos[@"name"];
+    [self.formTableView reloadData];
+    [self checkSearchButtonStatus];
+}
+
+- (void)checkSearchButtonStatus
+{
+    self.searchButton.enabled = startTrip && endTrip && startTripDate && endTripDate;
 }
 
 #pragma mark - Table view data source
@@ -63,13 +82,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int row = indexPath.row;
+    NSInteger row = indexPath.row;
     
     if (row == 0) {
         ARLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FromCell"];
         if (cell == nil) {
             cell = [[ARLocationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FromCell"];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
         }
         
         cell.location = startTrip;
@@ -79,15 +99,26 @@
         if (cell == nil) {
             cell = [[ARLocationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ToCell"];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
         }
         
         cell.location = endTrip;
         return cell;
-    } else {
-        ARLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    } else if (row == 2) {
+        ARLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StartDateCell"];
         if (cell == nil) {
-            cell = [[ARLocationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+            cell = [[ARLocationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"StartDateCell"];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+        }
+        
+        return cell;
+    } else {
+        ARLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EndDateCell"];
+        if (cell == nil) {
+            cell = [[ARLocationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EndDateCell"];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
         }
         
         return cell;
@@ -98,21 +129,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int row = indexPath.row;
+    NSInteger row = indexPath.row;
     
     switch (row) {
-        case 0:
+        case 0:{
             if (searchViewController == nil) {
                 searchViewController = [[ARSearchViewController alloc] init];
             }
-            searchViewController.selectAction = ^(NSString *position){
-                NSLog(@"%@", position);
+            __weak ARViewController *wSelf = self;
+            searchViewController.selectPosition = ^(NSDictionary *position){
+                [wSelf setStartPosition:position];
             };
-            [self presentViewController:searchViewController animated:YES completion:nil];
+            [self presentViewController:searchViewController animated:YES completion:^{
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            }];
             break;
-            
-        default:
+        }
+        case 1:{
+            if (searchViewController == nil) {
+                searchViewController = [[ARSearchViewController alloc] init];
+            }
+            __weak ARViewController *wSelf = self;
+            searchViewController.selectPosition = ^(NSDictionary *position){
+                [wSelf setEndPosition:position];
+            };
+            [self presentViewController:searchViewController animated:YES completion:^{
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            }];
             break;
+        }
     }
 }
 
