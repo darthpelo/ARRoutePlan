@@ -29,7 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.searchButton.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,46 +39,47 @@
 
 - (IBAction)searchButtonPressed:(id)sender
 {
+    if (!startTrip || !endTrip || !startTripDate || !endTripDate) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention"
+                                                        message:@"You must fill in all fields!"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ];
+        [alert show];
+    } else {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention"
-                                                    message:@"Search function isn't impelement yet"
+                                                    message:@"The search function isn't yet ready... :("
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil
                           ];
     [alert show];
+    }
 }
 
 - (void)setStartPosition:(NSDictionary *)pos
 {
     startTrip = pos[@"name"];
     [self.formTableView reloadData];
-    [self checkSearchButtonStatus];
 }
 
 - (void)setEndPosition:(NSDictionary *)pos
 {
     endTrip = pos[@"name"];
     [self.formTableView reloadData];
-    [self checkSearchButtonStatus];
 }
 
 - (void)setStartDate:(NSString *)date
 {
     startTripDate = date;
     [self.formTableView reloadData];
-    [self checkSearchButtonStatus];
 }
 
 - (void)setEndDate:(NSString *)date
 {
     endTripDate = date;
     [self.formTableView reloadData];
-    [self checkSearchButtonStatus];
-}
-
-- (void)checkSearchButtonStatus
-{
-    self.searchButton.enabled = startTrip && endTrip && startTripDate && endTripDate;
 }
 
 #pragma mark - Table view data source

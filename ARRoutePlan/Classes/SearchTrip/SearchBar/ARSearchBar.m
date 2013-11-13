@@ -17,14 +17,14 @@
     self = [super initWithFrame:frame];
     if (self) {
         _searchBar = [[UISearchBar alloc]initWithFrame:CGRectZero];
-        _searchBar.frame = CGRectMake(0, 0, 240, 46);
-        _searchBar.barTintColor = UIColorFromRGB(0x457FA5);
-        _searchBar.tintColor = UIColorFromRGB(0x457FA5);
-        _searchBar.backgroundColor = UIColorFromRGB(0x457FA5);
+        _searchBar.frame = CGRectMake(0, 0, 260, 46);
+        _searchBar.barTintColor = UIColorFromRGB(0x427CA1);
+        _searchBar.tintColor = UIColorFromRGB(0x427CA1);
+        _searchBar.backgroundColor = UIColorFromRGB(0x427CA1);
         
         UIButton *cancellBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        cancellBtn.frame = CGRectMake(240, 0, 80, 46);
-        [cancellBtn setBackgroundColor:UIColorFromRGB(0x457FA5)];
+        cancellBtn.frame = CGRectMake(260, 0, 60, 46);
+        [cancellBtn setBackgroundColor:UIColorFromRGB(0x427CA1)];
         [cancellBtn setTitle:@"Close" forState:UIControlStateNormal];
         [cancellBtn touchUpInside:^(UIEvent *event) {
             [searchBarDelegate searchBarCancelButtonClicked:_searchBar];
@@ -35,7 +35,7 @@
         
         //        [[UISearchBar appearance] setSearchFieldBackgroundImage:[] forState:UIControlStateNormal];
         _searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
-        _searchBar.placeholder = @"Insert minimum 2 letters";
+        _searchBar.placeholder = @"Enter at least the first 2 letters";
         _searchBar.delegate = self;
         [self addSubview:_searchBar];
     }

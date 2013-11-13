@@ -26,6 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:UIColorFromRGB(0x427CA1)];
+    
     MNCalendarView *calendarView = [[MNCalendarView alloc] initWithFrame:self.view.bounds];
     calendarView.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     calendarView.selectedDate = [NSDate date];
@@ -57,7 +59,7 @@
 - (BOOL)calendarView:(MNCalendarView *)calendarView shouldSelectDate:(NSDate *)date {
     NSTimeInterval timeInterval = [date timeIntervalSinceDate:[NSDate date]];
     
-    if (timeInterval < 0) {
+    if (timeInterval < -5000) {
         return NO;
     }
     

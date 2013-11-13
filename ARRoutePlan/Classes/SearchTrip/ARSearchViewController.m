@@ -43,7 +43,7 @@
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:UIColorFromRGB(0x457FA5)];
+    [self.view setBackgroundColor:UIColorFromRGB(0x427CA1)];
 	
     searchView = [[ARSearchBar alloc] initWithFrame:CGRectMake(0, 20, 320, 46)];
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
