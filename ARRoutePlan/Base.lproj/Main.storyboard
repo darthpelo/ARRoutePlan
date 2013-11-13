@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -13,20 +13,22 @@
                         <viewControllerLayoutGuide type="bottom" id="nd2-5C-xzE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EhE-kK-bk0">
-                                <rect key="frame" x="94" y="392" width="133" height="34"/>
+                                <rect key="frame" x="94" y="514" width="133" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="aAV-Nh-KUJ"/>
+                                    <constraint firstAttribute="height" constant="34" id="3Nj-uw-4S6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Search trip">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -34,43 +36,58 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="I0k-LT-zMz">
-                                <rect key="frame" x="0.0" y="61" width="320" height="296"/>
+                                <rect key="frame" x="0.0" y="118" width="320" height="296"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="296" id="7Ez-JY-1So"/>
+                                    <constraint firstAttribute="height" constant="296" id="w1V-jS-MA0"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="UR0-cq-wLr"/>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="WkJ-ds-v8s"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TAn-x2-R7V">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TAn-x2-R7V">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.056727643899999999" green="0.53993047760000001" blue="0.92384935459999995" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your Round-trip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0z-ie-e6W">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GoEuro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0z-ie-e6W">
                                 <rect key="frame" x="20" y="28" width="280" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="NAg-qf-gv9"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plan your trip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lxl-Vb-BiC">
+                                <rect key="frame" x="20" y="75" width="280" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="h0z-ie-e6W" secondAttribute="bottom" constant="8" symbolic="YES" id="0Q7-B0-rYI"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="leading" secondItem="TAn-x2-R7V" secondAttribute="leading" id="2mb-cB-aKb"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="9ge-fY-yoZ"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="61" id="OYr-Ew-u6p"/>
-                            <constraint firstItem="nd2-5C-xzE" firstAttribute="top" secondItem="EhE-kK-bk0" secondAttribute="bottom" constant="54" id="brb-pe-bUv"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="trailing" secondItem="TAn-x2-R7V" secondAttribute="trailing" id="ec7-ru-PSn"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="centerX" secondItem="EhE-kK-bk0" secondAttribute="centerX" id="hMz-FV-Xt3"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="centerX" secondItem="h0z-ie-e6W" secondAttribute="centerX" id="mzc-WF-bGS"/>
-                            <constraint firstAttribute="trailing" secondItem="I0k-LT-zMz" secondAttribute="trailing" id="p27-u2-3gs"/>
-                            <constraint firstItem="EhE-kK-bk0" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="94" id="rQ7-sJ-dVY"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="TAn-x2-R7V" secondAttribute="bottom" constant="1" id="xVi-as-jk3"/>
+                            <constraint firstItem="EhE-kK-bk0" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="94" id="1h6-Qq-VPQ"/>
+                            <constraint firstItem="TAn-x2-R7V" firstAttribute="centerX" secondItem="h0z-ie-e6W" secondAttribute="centerX" id="5NO-gc-ksk"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="centerX" secondItem="EhE-kK-bk0" secondAttribute="centerX" id="9dh-sp-Pel"/>
+                            <constraint firstAttribute="bottom" secondItem="EhE-kK-bk0" secondAttribute="bottom" constant="20" symbolic="YES" id="CCE-8G-7SH"/>
+                            <constraint firstItem="TAn-x2-R7V" firstAttribute="trailing" secondItem="I0k-LT-zMz" secondAttribute="trailing" id="CwD-l3-p73"/>
+                            <constraint firstItem="Lxl-Vb-BiC" firstAttribute="trailing" secondItem="h0z-ie-e6W" secondAttribute="trailing" id="Dmz-vt-gVu"/>
+                            <constraint firstAttribute="trailing" secondItem="I0k-LT-zMz" secondAttribute="trailing" id="OGs-hh-cHQ"/>
+                            <constraint firstItem="Lxl-Vb-BiC" firstAttribute="top" secondItem="TAn-x2-R7V" secondAttribute="bottom" constant="15" id="Rm7-Hq-FLL"/>
+                            <constraint firstItem="h0z-ie-e6W" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="Tpw-Yl-8Yr"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="Lxl-Vb-BiC" secondAttribute="bottom" constant="19" id="Wjh-ql-2ai"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="ZdK-Kl-HGo"/>
+                            <constraint firstItem="TAn-x2-R7V" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="fRN-dh-ptd"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="118" id="gCA-fA-C29"/>
+                            <constraint firstItem="Lxl-Vb-BiC" firstAttribute="leading" secondItem="h0z-ie-e6W" secondAttribute="leading" id="hxr-j4-XkW"/>
+                            <constraint firstItem="TAn-x2-R7V" firstAttribute="leading" secondItem="I0k-LT-zMz" secondAttribute="leading" id="i3t-k2-EwZ"/>
+                            <constraint firstItem="h0z-ie-e6W" firstAttribute="top" secondItem="nKU-6o-ZoA" secondAttribute="bottom" constant="8" id="lOW-FH-KPR"/>
                         </constraints>
                     </view>
                     <connections>
@@ -85,6 +102,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
 </document>
