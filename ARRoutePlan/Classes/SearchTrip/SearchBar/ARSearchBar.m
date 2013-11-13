@@ -16,32 +16,30 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
         _searchBar = [[UISearchBar alloc]initWithFrame:CGRectZero];
+        _searchBar.frame = CGRectMake(0, 0, 240, 46);
+        _searchBar.barTintColor = UIColorFromRGB(0x457FA5);
+        _searchBar.tintColor = UIColorFromRGB(0x457FA5);
+        _searchBar.backgroundColor = UIColorFromRGB(0x457FA5);
         
-
-            _searchBar.frame = CGRectMake(0, 0, 320, 46);
-            _searchBar.barTintColor = [UIColor whiteColor];
-            _searchBar.tintColor = UIColorFromRGB(0x1D7800);
-            _searchBar.backgroundColor = [UIColor whiteColor];
-            
-            UIButton *cancellBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-            cancellBtn.frame = CGRectMake(240, 0, 70, 46);
-            [cancellBtn setBackgroundColor:[UIColor whiteColor]];
-            [cancellBtn setTitle:@"Close" forState:UIControlStateNormal];
-            [cancellBtn touchUpInside:^(UIEvent *event) {
-                [searchBarDelegate searchBarCancelButtonClicked:_searchBar];
-                [self resetSearchBarText];
-            }];
-            cancellBtn.tintColor = UIColorFromRGB(0x1D7800);
-            [self addSubview:cancellBtn];
-
-//        [[UISearchBar appearance] setSearchFieldBackgroundImage:[] forState:UIControlStateNormal];
+        UIButton *cancellBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        cancellBtn.frame = CGRectMake(240, 0, 80, 46);
+        [cancellBtn setBackgroundColor:UIColorFromRGB(0x457FA5)];
+        [cancellBtn setTitle:@"Close" forState:UIControlStateNormal];
+        [cancellBtn touchUpInside:^(UIEvent *event) {
+            [searchBarDelegate searchBarCancelButtonClicked:_searchBar];
+            [self resetSearchBarText];
+        }];
+        cancellBtn.tintColor = [UIColor whiteColor];
+        [self addSubview:cancellBtn];
+        
+        //        [[UISearchBar appearance] setSearchFieldBackgroundImage:[] forState:UIControlStateNormal];
         _searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
-        _searchBar.placeholder = @"";
+        _searchBar.placeholder = @"Insert minimum 2 letters";
         _searchBar.delegate = self;
         [self addSubview:_searchBar];
     }
+    
     return self;
 }
 
