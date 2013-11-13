@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ARSearchViewController : UIViewController
+@interface ARSearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIScrollViewDelegate>
+
+@property (copy) void (^selectAction)(NSString *position);
 
 @end

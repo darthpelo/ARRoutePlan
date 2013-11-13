@@ -9,12 +9,15 @@
 #import "ARViewController.h"
 #import "ARLocationCell.h"
 #import "ARDateCell.h"
+#import "ARSearchViewController.h"
 
 @interface ARViewController () {
     NSString *startTrip;
     NSString *endTrip;
     NSDate *startTripDate;
     NSDate *endTripDate;
+    
+    ARSearchViewController *searchViewController;
 }
 
 @end
@@ -88,6 +91,28 @@
         }
         
         return cell;
+    }
+}
+
+#pragma mark - Table view cell selection
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = indexPath.row;
+    
+    switch (row) {
+        case 0:
+            if (searchViewController == nil) {
+                searchViewController = [[ARSearchViewController alloc] init];
+            }
+            searchViewController.selectAction = ^(NSString *position){
+                NSLog(@"%@", position);
+            };
+            [self presentViewController:searchViewController animated:YES completion:nil];
+            break;
+            
+        default:
+            break;
     }
 }
 

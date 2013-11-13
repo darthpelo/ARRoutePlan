@@ -7,7 +7,6 @@
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <viewController id="vXZ-lx-hvc" customClass="ARViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nKU-6o-ZoA"/>
@@ -18,11 +17,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EhE-kK-bk0">
-                                <rect key="frame" x="94" y="399" width="133" height="30"/>
+                                <rect key="frame" x="94" y="392" width="133" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="aAV-Nh-KUJ"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Search trip">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -32,40 +34,43 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="I0k-LT-zMz">
-                                <rect key="frame" x="0.0" y="73" width="320" height="296"/>
+                                <rect key="frame" x="0.0" y="61" width="320" height="296"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="296" id="e5p-uZ-OvM"/>
+                                    <constraint firstAttribute="height" constant="296" id="7Ez-JY-1So"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="UR0-cq-wLr"/>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="WkJ-ds-v8s"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Round-trip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0z-ie-e6W">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TAn-x2-R7V">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.056727643899999999" green="0.53993047760000001" blue="0.92384935459999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your Round-trip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0z-ie-e6W">
                                 <rect key="frame" x="20" y="28" width="280" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="UWF-cX-pmD"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="textColor" red="0.056727643896672161" green="0.53993047758441393" blue="0.92384935461956519" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="centerX" secondItem="EhE-kK-bk0" secondAttribute="centerX" id="Lfx-vU-VVd"/>
-                            <constraint firstItem="EhE-kK-bk0" firstAttribute="top" secondItem="I0k-LT-zMz" secondAttribute="bottom" constant="30" id="Npv-rW-04v"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Ny3-7a-AUx"/>
-                            <constraint firstAttribute="trailing" secondItem="I0k-LT-zMz" secondAttribute="trailing" id="aZd-1O-pPY"/>
-                            <constraint firstItem="h0z-ie-e6W" firstAttribute="top" secondItem="nKU-6o-ZoA" secondAttribute="bottom" constant="8" id="eEx-K8-4NP"/>
-                            <constraint firstItem="EhE-kK-bk0" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="94" id="nb0-fE-aZZ"/>
-                            <constraint firstItem="h0z-ie-e6W" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="tMa-sc-WYf"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="h0z-ie-e6W" secondAttribute="bottom" constant="20" id="vEq-Co-TNJ"/>
-                            <constraint firstItem="nd2-5C-xzE" firstAttribute="top" secondItem="EhE-kK-bk0" secondAttribute="bottom" constant="51" id="yOg-sv-0bT"/>
-                            <constraint firstItem="I0k-LT-zMz" firstAttribute="centerX" secondItem="h0z-ie-e6W" secondAttribute="centerX" id="zZu-c8-QBz"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="h0z-ie-e6W" secondAttribute="bottom" constant="8" symbolic="YES" id="0Q7-B0-rYI"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="leading" secondItem="TAn-x2-R7V" secondAttribute="leading" id="2mb-cB-aKb"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="9ge-fY-yoZ"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="61" id="OYr-Ew-u6p"/>
+                            <constraint firstItem="nd2-5C-xzE" firstAttribute="top" secondItem="EhE-kK-bk0" secondAttribute="bottom" constant="54" id="brb-pe-bUv"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="trailing" secondItem="TAn-x2-R7V" secondAttribute="trailing" id="ec7-ru-PSn"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="centerX" secondItem="EhE-kK-bk0" secondAttribute="centerX" id="hMz-FV-Xt3"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="centerX" secondItem="h0z-ie-e6W" secondAttribute="centerX" id="mzc-WF-bGS"/>
+                            <constraint firstAttribute="trailing" secondItem="I0k-LT-zMz" secondAttribute="trailing" id="p27-u2-3gs"/>
+                            <constraint firstItem="EhE-kK-bk0" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="94" id="rQ7-sJ-dVY"/>
+                            <constraint firstItem="I0k-LT-zMz" firstAttribute="top" secondItem="TAn-x2-R7V" secondAttribute="bottom" constant="1" id="xVi-as-jk3"/>
                         </constraints>
                     </view>
                     <connections>
@@ -73,6 +78,7 @@
                         <outlet property="searchButton" destination="EhE-kK-bk0" id="Ahn-RM-7gw"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
