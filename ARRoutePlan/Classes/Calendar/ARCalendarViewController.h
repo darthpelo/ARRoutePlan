@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MNCalendarView.h"
 
-@interface ARCalendarViewController : UIViewController
+@interface ARCalendarViewController : UIViewController <MNCalendarViewDelegate>
+
+@property (copy) void (^selectDate)(NSString *date);
 
 @end

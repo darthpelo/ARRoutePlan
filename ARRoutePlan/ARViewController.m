@@ -10,14 +10,16 @@
 #import "ARLocationCell.h"
 #import "ARDateCell.h"
 #import "ARSearchViewController.h"
+#import "ARCalendarViewController.h"
 
 @interface ARViewController () {
     NSString *startTrip;
     NSString *endTrip;
-    NSDate *startTripDate;
-    NSDate *endTripDate;
+    NSString *startTripDate;
+    NSString *endTripDate;
     
     ARSearchViewController *searchViewController;
+    ARCalendarViewController *calendarViewController;
 }
 
 @end
@@ -57,6 +59,20 @@
 - (void)setEndPosition:(NSDictionary *)pos
 {
     endTrip = pos[@"name"];
+    [self.formTableView reloadData];
+    [self checkSearchButtonStatus];
+}
+
+- (void)setStartDate:(NSString *)date
+{
+    startTripDate = date;
+    [self.formTableView reloadData];
+    [self checkSearchButtonStatus];
+}
+
+- (void)setEndDate:(NSString *)date
+{
+    endTripDate = date;
     [self.formTableView reloadData];
     [self checkSearchButtonStatus];
 }
@@ -111,7 +127,7 @@
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
         }
-        
+        cell.location = startTripDate;
         return cell;
     } else {
         ARLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EndDateCell"];
@@ -120,7 +136,7 @@
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
         }
-        
+        cell.location = endTripDate;
         return cell;
     }
 }
@@ -154,6 +170,32 @@
                 [wSelf setEndPosition:position];
             };
             [self presentViewController:searchViewController animated:YES completion:^{
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            }];
+            break;
+        }
+        case 2:{
+            if (calendarViewController == nil) {
+                calendarViewController = [[ARCalendarViewController alloc] init];
+            }
+            __weak ARViewController *wSelf = self;
+            calendarViewController.selectDate = ^(NSString *selectDate){
+                [wSelf setStartDate:selectDate];
+            };
+            [self presentViewController:calendarViewController animated:YES completion:^{
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            }];
+            break;
+        }
+        case 3:{
+            if (calendarViewController == nil) {
+                calendarViewController = [[ARCalendarViewController alloc] init];
+            }
+            __weak ARViewController *wSelf = self;
+            calendarViewController.selectDate = ^(NSString *selectDate){
+                [wSelf setEndDate:selectDate];
+            };
+            [self presentViewController:calendarViewController animated:YES completion:^{
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
             }];
             break;
