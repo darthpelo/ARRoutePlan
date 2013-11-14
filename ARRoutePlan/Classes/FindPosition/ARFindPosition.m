@@ -40,24 +40,24 @@
 
 - (void)filterPositions:(NSArray *)positions byString:(NSString *)string result:(void (^)(id))block
 {
-    // Suddivido chiave di ricerca
+    // divide the search key
     NSString *key = [string lowercaseString];
     NSArray *tokens = [key componentsSeparatedByString:@" "];
     
-    // Inserisco in un array le stringhe contenenti i nomi dei tag
+    // put in an array strings containing the names of the positions
     NSMutableArray *tmp = [NSMutableArray array];
     for (NSDictionary *pos in positions) {
         NSString *lcPosName = [pos[@"name"] lowercaseString];
         [tmp addObject:lcPosName];
     }
     
-    // Ricorsivamente filtro l'array con le sotto stringhe della chiave di ricerca
+    // filter array with the substrings of the search key
     for (NSString *str in tokens) {
         if (![str isEqualToString:@""])
             tmp = (NSMutableArray *)[tmp filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@",str]];
     }
     
-    // Inserisco nella lista dei tag trovati i tag il cui nome è presente nell'array filtrato
+    // enter in the list of locations you have found positions in the array whose name is filtered
     NSMutableArray *result = [NSMutableArray array];
     for (NSString *name in tmp) {
         for (NSDictionary *pos in positions) {
