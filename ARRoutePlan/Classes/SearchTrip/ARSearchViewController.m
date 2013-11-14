@@ -11,10 +11,13 @@
 #import "ARNetworkManagment.h"
 #import "ARFindPosition.h"
 
+#define KEYBOARD_OPEN 216.0f
+
 @interface ARSearchViewController () {
     ARSearchBar *searchView;
     UITableView *_tableView;
     NSMutableArray *_tagsInSearch;
+    MBProgressHUD *HUD;
     
     NSArray *_positionsList;
     NSMutableArray *_positionsInSearch;
@@ -90,6 +93,16 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if ([searchView getSearchBarText].length == 2 && serverRequestEnd && !positionsListReady) {
+        // Fake view for MOProgressHUD
+        CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+        float fakeH = (screenHeight == 568.0f) ? 568 - KEYBOARD_OPEN : 480 - KEYBOARD_OPEN;
+        UIView *fakeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, fakeH)];
+        [_tableView addSubview:fakeView];
+        
+        HUD = [[MBProgressHUD alloc] initWithView:fakeView];
+        [fakeView addSubview:HUD];
+        HUD.delegate = self;
+        [HUD show:YES];
         serverRequestEnd = NO;
         ARNetworkManagment *netManager = [ARNetworkManagment sharedManager];
         [netManager getPositionList:[[searchView getSearchBarText] lowercaseString] success:^(id responsedData) {
@@ -100,13 +113,19 @@
                 serverRequestEnd = YES;
                 positionsListReady = YES;
                 [_tableView reloadData];
+                [HUD hide:YES];
+                [fakeView removeFromSuperview];
             } failure:^(id responsedData) {
+                [HUD hide:YES];
+                [fakeView removeFromSuperview];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Error occured!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 serverRequestEnd = YES;
                 positionsListReady = NO;
             }];
         } failure:^(id responsedData) {
+            [HUD hide:YES];
+            [fakeView removeFromSuperview];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Network Problem!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             serverRequestEnd = YES;
@@ -124,6 +143,17 @@
         positionsListReady = NO;
         serverRequestEnd = YES;
         [_tableView reloadData];
+    }
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    if ([searchView getSearchBarText].length > 2 && positionsListReady) {
+        ARFindPosition *finder = [ARFindPosition sharedManager];
+        [finder filterPositions:_positionsList byString:[searchView getSearchBarText] result:^(id responsedData) {
+            _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
+            [_tableView reloadData];
+        }];
     }
 }
 

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "MBProgressHUD.h"
 
-@interface ARSearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, CLLocationManagerDelegate>
+@interface ARSearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, MBProgressHUDDelegate>
 
 @property (copy) void (^selectPosition)(NSDictionary *position);
 
