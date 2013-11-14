@@ -32,9 +32,7 @@
         }];
         cancellBtn.tintColor = [UIColor whiteColor];
         [self addSubview:cancellBtn];
-        
-        //        [[UISearchBar appearance] setSearchFieldBackgroundImage:[] forState:UIControlStateNormal];
-        _searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
+        _searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
         _searchBar.placeholder = @"Enter at least the first 2 letters";
         _searchBar.delegate = self;
         [self addSubview:_searchBar];

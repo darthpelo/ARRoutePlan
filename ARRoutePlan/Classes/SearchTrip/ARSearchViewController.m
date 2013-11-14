@@ -108,11 +108,19 @@
         [netManager getPositionList:[[searchView getSearchBarText] lowercaseString] success:^(id responsedData) {
             ARFindPosition *finder = [ARFindPosition sharedManager];
             [finder findNearestPosition:responsedData userCoord:(CLLocationCoordinate2D)_locationManager.location.coordinate success:^(id responsedData) {
-                _positionsList = [[NSArray alloc] initWithArray:responsedData];
-                _positionsInSearch = [NSMutableArray arrayWithArray:_positionsList];
                 serverRequestEnd = YES;
-                positionsListReady = YES;
-                [_tableView reloadData];
+                _positionsList = [[NSArray alloc] initWithArray:responsedData];
+                if ([searchView getSearchBarText].length > 2) {
+                    [finder filterPositions:_positionsList byString:[searchView getSearchBarText] result:^(id responsedData) {
+                        positionsListReady = YES;
+                        _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
+                        [_tableView reloadData];
+                    }];
+                } else {
+                    positionsListReady = YES;
+                    _positionsInSearch = [NSMutableArray arrayWithArray:_positionsList];
+                    [_tableView reloadData];
+                }
                 [HUD hide:YES];
                 [fakeView removeFromSuperview];
             } failure:^(id responsedData) {
