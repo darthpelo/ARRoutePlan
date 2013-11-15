@@ -9,6 +9,8 @@
 #import "ARCalendarViewController.h"
 #import "UIControl+MTControl.h"
 
+#define SECONDS_IN_DAY 86400
+
 @interface ARCalendarViewController ()
 
 @end
@@ -76,7 +78,8 @@
 - (BOOL)calendarView:(MNCalendarView *)calendarView shouldSelectDate:(NSDate *)date {
     NSTimeInterval timeInterval = [date timeIntervalSinceDate:[NSDate date]];
     
-    if (timeInterval < -5000) {
+    // If possibile to select a day strat from the current day
+    if (timeInterval < - SECONDS_IN_DAY) {
         return NO;
     }
     
