@@ -64,8 +64,10 @@
 #pragma mark - MNCalendarViewDelegate
 
 - (void)calendarView:(MNCalendarView *)calendarView didSelectDate:(NSDate *)date {
+    // fix MNCalendarView issue
     NSTimeInterval secondsInOneHour= 1 * 60 * 60;
     NSDate *dateOneHourAhead = [date dateByAddingTimeInterval:secondsInOneHour];
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MM-dd-yyyy"];
     
