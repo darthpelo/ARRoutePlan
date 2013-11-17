@@ -4,7 +4,7 @@ ARRoutePlan
 **WORK IN PROGRESS**
 
 Simple excercise to test:
-* autocomplete search (with api)
+* autocomplete search (with GoEuro)
 * calendar picker
 
 UI ispiration by Kayak app.
