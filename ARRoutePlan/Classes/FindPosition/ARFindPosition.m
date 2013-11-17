@@ -24,17 +24,20 @@
 {
     NSMutableArray *newPositions = [[NSMutableArray alloc] init];
     for (NSDictionary *position in positions) {
-        double lat = [position[@"geo_position"][@"latitude"] doubleValue];
-        double lon = [position[@"geo_position"][@"longitude"] doubleValue];
-        CLLocationCoordinate2D positionCoord = CLLocationCoordinate2DMake(lat, lon);
-        CLLocation *a = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
-        CLLocation *b = [[CLLocation alloc] initWithLatitude:positionCoord.latitude longitude:positionCoord.longitude];
-        double distance = [a distanceFromLocation:b];
+        CLLocationCoordinate2D positionCoord = CLLocationCoordinate2DMake([position[@"geo_position"][@"latitude"] doubleValue],
+                                                                          [position[@"geo_position"][@"longitude"] doubleValue]
+                                                                          );
+        
+        CLLocation *currentLoc = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+        CLLocation *posLoc = [[CLLocation alloc] initWithLatitude:positionCoord.latitude longitude:positionCoord.longitude];
+        double distance = [currentLoc distanceFromLocation:posLoc];
+        
         NSMutableDictionary *newPosition = [NSMutableDictionary dictionaryWithDictionary:position];
         [newPosition setObject:[NSNumber numberWithDouble:distance] forKey:@"distance"];
         [newPositions addObject:newPosition];
     }
     
+    // Sorted newPositions array, by distance, in ascending order
     NSArray *sorted = [newPositions sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES]]];
     success([self convert:sorted]);
 }
