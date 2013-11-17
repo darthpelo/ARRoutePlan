@@ -18,6 +18,7 @@
 		BE2C63C018335BAE002C5976 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C63B718335BAE002C5976 /* UIImageView+AFNetworking.m */; };
 		BE2C63C518335C35002C5976 /* ARNetworkManagment.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C63C418335C35002C5976 /* ARNetworkManagment.m */; };
 		BE2C63C818335C44002C5976 /* ARFindPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C63C718335C44002C5976 /* ARFindPosition.m */; };
+		BE801DFB1837E1110029173E /* ARPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = BE801DFA1837E1110029173E /* ARPosition.m */; };
 		BEADF6A61834C08800EAD955 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BEADF6A51834C08800EAD955 /* MBProgressHUD.m */; };
 		BEAF49B1183372430008EDDC /* NSString+Extra.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAF49B0183372430008EDDC /* NSString+Extra.m */; };
 		BEB5CB821834321A00BA907F /* MNCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB5CB721834321A00BA907F /* MNCalendarHeaderView.m */; };
@@ -84,6 +85,8 @@
 		BE2C63C418335C35002C5976 /* ARNetworkManagment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARNetworkManagment.m; sourceTree = "<group>"; };
 		BE2C63C618335C44002C5976 /* ARFindPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARFindPosition.h; sourceTree = "<group>"; };
 		BE2C63C718335C44002C5976 /* ARFindPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARFindPosition.m; sourceTree = "<group>"; };
+		BE801DF91837E1110029173E /* ARPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARPosition.h; sourceTree = "<group>"; };
+		BE801DFA1837E1110029173E /* ARPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARPosition.m; sourceTree = "<group>"; };
 		BEADF6A41834C08800EAD955 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		BEADF6A51834C08800EAD955 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		BEAF49AF183372430008EDDC /* NSString+Extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extra.h"; sourceTree = "<group>"; };
@@ -313,6 +316,8 @@
 				BEC49DB41832CAD800BA941F /* Calendar */,
 				BEC49DB51832CAD800BA941F /* MenuCells */,
 				BEC49DB61832CAD800BA941F /* SearchTrip */,
+				BE801DF91837E1110029173E /* ARPosition.h */,
+				BE801DFA1837E1110029173E /* ARPosition.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -475,6 +480,7 @@
 				BE2C63BB18335BAE002C5976 /* AFJSONRequestOperation.m in Sources */,
 				BE2C63B918335BAE002C5976 /* AFHTTPRequestOperation.m in Sources */,
 				BE2C63BF18335BAE002C5976 /* AFXMLRequestOperation.m in Sources */,
+				BE801DFB1837E1110029173E /* ARPosition.m in Sources */,
 				BE2C63BE18335BAE002C5976 /* AFURLConnectionOperation.m in Sources */,
 				BEADF6A61834C08800EAD955 /* MBProgressHUD.m in Sources */,
 				BE2C63BA18335BAE002C5976 /* AFImageRequestOperation.m in Sources */,

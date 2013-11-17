@@ -17,4 +17,6 @@
 
 - (void)filterPositions:(NSArray *)positions byString:(NSString *)string result:(void(^)(id responsedData))block;
 
+- (NSMutableArray *)convert:(NSArray *)positions;
+
 @end

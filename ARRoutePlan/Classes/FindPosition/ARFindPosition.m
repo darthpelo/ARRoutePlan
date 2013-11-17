@@ -7,6 +7,7 @@
 //
 
 #import "ARFindPosition.h"
+#import "ARPosition.h"
 
 @implementation ARFindPosition
 
@@ -35,7 +36,7 @@
     }
     
     NSArray *sorted = [newPositions sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES]]];
-    success(sorted);
+    success([self convert:sorted]);
 }
 
 - (void)filterPositions:(NSArray *)positions byString:(NSString *)string result:(void (^)(id))block
@@ -46,8 +47,8 @@
     
     // put in an array strings containing the names of the positions
     NSMutableArray *tmp = [NSMutableArray array];
-    for (NSDictionary *pos in positions) {
-        NSString *lcPosName = [pos[@"name"] lowercaseString];
+    for (ARPosition *pos in positions) {
+        NSString *lcPosName = [pos.name lowercaseString];
         [tmp addObject:lcPosName];
     }
     
@@ -60,13 +61,23 @@
     // enter in the list of locations you have found positions in the array whose name is filtered
     NSMutableArray *result = [NSMutableArray array];
     for (NSString *name in tmp) {
-        for (NSDictionary *pos in positions) {
-            if ([name isEqualToString:[pos[@"name"] lowercaseString]])
+        for (ARPosition *pos in positions) {
+            if ([name isEqualToString:[pos.name lowercaseString]])
                 [result addObject:pos];
         }
     }
     
     block(result);
+}
+
+- (NSMutableArray *)convert:(NSArray *)positions
+{
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in positions) {
+        ARPosition *pos = [[ARPosition alloc] initWithDictionary:dic];
+        [result addObject:pos];
+    }
+    return result;
 }
 
 @end

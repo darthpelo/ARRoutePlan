@@ -105,13 +105,20 @@
         [HUD show:YES];
         serverRequestEnd = NO;
         ARNetworkManagment *netManager = [ARNetworkManagment sharedManager];
+        
+        // get position from server with the first two letters
         [netManager getPositionList:[[searchView getSearchBarText] lowercaseString] success:^(id responsedData) {
             ARFindPosition *finder = [ARFindPosition sharedManager];
+            
+            // reorder position by distance
             [finder findNearestPosition:responsedData userCoord:(CLLocationCoordinate2D)_locationManager.location.coordinate success:^(id responsedData) {
                 serverRequestEnd = YES;
                 _positionsList = [[NSArray alloc] initWithArray:responsedData];
+                
+                // check if user digit more chars during the server request and find result
                 if ([searchView getSearchBarText].length > 2) {
                     [finder filterPositions:_positionsList byString:[searchView getSearchBarText] result:^(id responsedData) {
+                        // ordered list is ready
                         positionsListReady = YES;
                         _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
                         [_tableView reloadData];
@@ -140,12 +147,14 @@
             positionsListReady = NO;
         }];
     } else if ([searchView getSearchBarText].length >= 2 && positionsListReady) {
+        // with string with more than 2 chars is possible to use _positionsList to find the location
         ARFindPosition *finder = [ARFindPosition sharedManager];
         [finder filterPositions:_positionsList byString:[searchView getSearchBarText] result:^(id responsedData) {
             _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
             [_tableView reloadData];
         }];
     } else if (positionsListReady && [searchView getSearchBarText].length < 2) {
+        // manage delete chars by user
         [_positionsInSearch removeAllObjects];
         _positionsList = nil;
         positionsListReady = NO;
@@ -197,8 +206,8 @@
         [cell setAccessoryType:UITableViewCellAccessoryNone];
     }
     
-    NSDictionary *position = [_positionsInSearch objectAtIndex:indexPath.row];
-    cell.textLabel.text = position[@"name"];
+    ARPosition *position = [_positionsInSearch objectAtIndex:indexPath.row];
+    cell.textLabel.text = position.name;
     return cell;
 }
 

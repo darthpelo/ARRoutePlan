@@ -11,6 +11,7 @@
 #import "ARDateCell.h"
 #import "ARSearchViewController.h"
 #import "ARCalendarViewController.h"
+#import "ARPosition.h"
 
 @interface ARViewController () {
     NSString *startTrip;
@@ -58,15 +59,15 @@
     }
 }
 
-- (void)setStartPosition:(NSDictionary *)pos
+- (void)setStartPosition:(NSString *)name
 {
-    startTrip = pos[@"name"];
+    startTrip = name;
     [self.formTableView reloadData];
 }
 
-- (void)setEndPosition:(NSDictionary *)pos
+- (void)setEndPosition:(NSString *)name
 {
-    endTrip = pos[@"name"];
+    endTrip = name;
     [self.formTableView reloadData];
 }
 
@@ -153,8 +154,8 @@
                 searchViewController = [[ARSearchViewController alloc] init];
             }
             __weak ARViewController *wSelf = self;
-            searchViewController.selectPosition = ^(NSDictionary *position){
-                [wSelf setStartPosition:position];
+            searchViewController.selectPosition = ^(ARPosition *position){
+                [wSelf setStartPosition:position.name];
             };
             [self presentViewController:searchViewController animated:YES completion:^{
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -166,8 +167,8 @@
                 searchViewController = [[ARSearchViewController alloc] init];
             }
             __weak ARViewController *wSelf = self;
-            searchViewController.selectPosition = ^(NSDictionary *position){
-                [wSelf setEndPosition:position];
+            searchViewController.selectPosition = ^(ARPosition *position){
+                [wSelf setEndPosition:position.name];
             };
             [self presentViewController:searchViewController animated:YES completion:^{
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
