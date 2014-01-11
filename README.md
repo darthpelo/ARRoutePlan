@@ -53,3 +53,7 @@ The API endpoint returns JSON documents like these if you search string is "post
 
 }
 ```
+License
+-------
+
+This code is distributed under the terms and conditions of the [GNU License](https://github.com/darthpelo/ARRoutePlan/blob/master/LICENSE).
