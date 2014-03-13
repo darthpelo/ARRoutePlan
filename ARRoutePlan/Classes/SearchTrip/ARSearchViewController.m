@@ -7,7 +7,8 @@
 //
 
 #import "ARSearchViewController.h"
-#import "ARSearchBar.h"
+#import "ARNetworkManagment.h"
+#import "ARFindPosition.h"
 #import "ARNetworkManagment.h"
 #import "ARFindPosition.h"
 
@@ -36,8 +37,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        positionsListReady = NO;
-        serverRequestEnd = YES;
+
     }
     return self;
 }
@@ -59,6 +59,7 @@
                   ];
     searchView.searchBarDelegate = self;
     [self.view addSubview:searchView];
+    searchView.searchBarDelegate = self;
     [searchView becomeFirstResponder];
     
     _tableView.dataSource = self;
@@ -87,102 +88,61 @@
     [_locationManager stopUpdatingLocation];
 }
 
+#pragma mark - ARSearchBar delegate
 
-#pragma mark - SearchBar delegate
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+- (void)newDestinationsRequest:(NSString *)request
 {
-    if ([searchView getSearchBarText].length == 2 && serverRequestEnd && !positionsListReady) {
-        // Fake view for MOProgressHUD
-        CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-        float fakeH = (screenHeight == 568.0f) ? 568 - KEYBOARD_OPEN : 480 - KEYBOARD_OPEN;
-        UIView *fakeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, fakeH)];
-        [_tableView addSubview:fakeView];
+    // Fake view for MBProgressHUD
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    float fakeH = (screenHeight == 568.0f) ? 568 - KEYBOARD_OPEN : 480 - KEYBOARD_OPEN;
+    UIView *fakeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, fakeH)];
+    [_tableView addSubview:fakeView];
+    
+    HUD = [[MBProgressHUD alloc] initWithView:fakeView];
+    [fakeView addSubview:HUD];
+    HUD.delegate = self;
+    
+    ARNetworkManagment *netManager = [ARNetworkManagment sharedManager];
+    
+    // get position from server with the first two letters
+    [netManager getPositionList:[request lowercaseString] success:^(id responsedData) {
+        ARFindPosition *finder = [ARFindPosition sharedManager];
         
-        HUD = [[MBProgressHUD alloc] initWithView:fakeView];
-        [fakeView addSubview:HUD];
-        HUD.delegate = self;
-        [HUD show:YES];
-        serverRequestEnd = NO;
-        ARNetworkManagment *netManager = [ARNetworkManagment sharedManager];
-        
-        // get position from server with the first two letters
-        [netManager getPositionList:[[searchView getSearchBarText] lowercaseString] success:^(id responsedData) {
-            ARFindPosition *finder = [ARFindPosition sharedManager];
+        // reorder position by distance
+        [finder findNearestPosition:responsedData userCoord:(CLLocationCoordinate2D)_locationManager.location.coordinate success:^(id responsedData) {
+            _positionsList = [[NSArray alloc] initWithArray:responsedData];
             
-            // reorder position by distance
-            [finder findNearestPosition:responsedData userCoord:(CLLocationCoordinate2D)_locationManager.location.coordinate success:^(id responsedData) {
-                serverRequestEnd = YES;
-                _positionsList = [[NSArray alloc] initWithArray:responsedData];
-                
-                // check if user digit more chars during the server request and find result
-                if ([searchView getSearchBarText].length > 2) {
-                    [finder filterPositions:_positionsList byString:[searchView getSearchBarText] result:^(id responsedData) {
-                        // ordered list is ready
-                        positionsListReady = YES;
-                        _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
-                        [_tableView reloadData];
-                    }];
-                } else {
-                    positionsListReady = YES;
-                    _positionsInSearch = [NSMutableArray arrayWithArray:_positionsList];
-                    [_tableView reloadData];
-                }
-                [HUD hide:YES];
-                [fakeView removeFromSuperview];
-            } failure:^(id responsedData) {
-                [HUD hide:YES];
-                [fakeView removeFromSuperview];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Error occured!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alert show];
-                serverRequestEnd = YES;
-                positionsListReady = NO;
+            [finder filterPositions:_positionsList byString:request result:^(id responsedData) {
+                // ordered list is ready
+                _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
+                [_tableView reloadData];
             }];
+            
+            [HUD hide:YES];
+            [fakeView removeFromSuperview];
         } failure:^(id responsedData) {
             [HUD hide:YES];
             [fakeView removeFromSuperview];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Network Problem!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Error occured!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
-            serverRequestEnd = YES;
-            positionsListReady = NO;
         }];
-    } else if ([searchView getSearchBarText].length >= 2 && positionsListReady) {
-        // with string with more than 2 chars is possible to use _positionsList to find the location
-        ARFindPosition *finder = [ARFindPosition sharedManager];
-        [finder filterPositions:_positionsList byString:[searchView getSearchBarText] result:^(id responsedData) {
-            _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
-            [_tableView reloadData];
-        }];
-    } else if (positionsListReady && [searchView getSearchBarText].length < 2) {
-        // manage delete chars by user
-        [_positionsInSearch removeAllObjects];
-        _positionsList = nil;
-        positionsListReady = NO;
-        serverRequestEnd = YES;
-        [_tableView reloadData];
-    }
+    } failure:^(id responsedData) {
+        [HUD hide:YES];
+        [fakeView removeFromSuperview];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Network Problem!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }];
 }
 
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    if ([searchView getSearchBarText].length > 2 && positionsListReady) {
-        ARFindPosition *finder = [ARFindPosition sharedManager];
-        [finder filterPositions:_positionsList byString:[searchView getSearchBarText] result:^(id responsedData) {
-            _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
-            [_tableView reloadData];
-        }];
-    }
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+- (void)closeButton
 {
     [self dismissViewControllerAnimated:YES completion:^(void){
         _positionsList = nil;
         [_positionsInSearch removeAllObjects];
         [_tableView reloadData];
-        [searchView resetSearchBarText];
     }];
 }
+
 
 #pragma mark - UIScrollDelegate
 
@@ -215,9 +175,9 @@
 {
     self.selectPosition([_positionsInSearch objectAtIndex:indexPath.row]);
     [self dismissViewControllerAnimated:YES completion:^{
+        [searchView resetSearchBarText];
         [_positionsInSearch removeAllObjects];
         [_tableView reloadData];
-        [searchView resetSearchBarText];
     }];
 }
 

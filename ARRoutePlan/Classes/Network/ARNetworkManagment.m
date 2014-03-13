@@ -27,7 +27,7 @@
     AFNetworkActivityIndicatorManager * newactivity = [[AFNetworkActivityIndicatorManager alloc] init];
     newactivity.enabled = YES;
     
-    NSString *urlString = [NSString stringWithFormat:@"http://pre.dev.goeuro.de:12345/api/v1/suggest/position/en/name/%@", [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.goeuro.com/api/v2/position/suggest/en/%@", [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];

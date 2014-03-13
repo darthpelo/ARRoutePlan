@@ -7,17 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
 
 #define MAX_SEARCH_LENGTH 20
 
-@interface ARSearchBar : UIView <UISearchBarDelegate> {
-    UISearchBar *_searchBar;
-}
+@protocol ARSearchBarDelegate <NSObject>
 
-@property (nonatomic, strong) id <UISearchBarDelegate> searchBarDelegate;
+@required
+- (void)newDestinationsRequest:(NSString *)request;
+- (void)closeButton;
+
+@end
+
+@interface ARSearchBar : UIView <UISearchBarDelegate, MBProgressHUDDelegate>
+
+@property (nonatomic, strong) id <ARSearchBarDelegate> searchBarDelegate;
 
 - (void)resetSearchBarText;
-- (NSString *)getSearchBarText;
-- (BOOL)resignFirstResponder;
 
 @end

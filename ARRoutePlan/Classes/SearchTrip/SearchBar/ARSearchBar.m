@@ -9,8 +9,13 @@
 #import "ARSearchBar.h"
 #import "UIControl+MTControl.h"
 
+@interface ARSearchBar () {
+    UISearchBar *_searchBar;
+}
+
+@end
+
 @implementation ARSearchBar
-@synthesize searchBarDelegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -27,13 +32,14 @@
         [cancellBtn setBackgroundColor:UIColorFromRGB(0x427CA1)];
         [cancellBtn setTitle:@"Close" forState:UIControlStateNormal];
         [cancellBtn touchUpInside:^(UIEvent *event) {
-            [searchBarDelegate searchBarCancelButtonClicked:_searchBar];
+            [_searchBarDelegate closeButton];
             [self resetSearchBarText];
         }];
         cancellBtn.tintColor = [UIColor whiteColor];
         [self addSubview:cancellBtn];
+        
         _searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-        _searchBar.placeholder = @"Enter at least the first 2 letters";
+        _searchBar.placeholder = @"Enter your destination";
         _searchBar.delegate = self;
         [self addSubview:_searchBar];
     }
@@ -64,27 +70,22 @@
     _searchBar.text = @"";
 }
 
-- (NSString *)getSearchBarText
-{
-    return _searchBar.text;
-}
-
--(void)setSearchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate_{
-    searchBarDelegate = searchBarDelegate_;
-}
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    [searchBarDelegate searchBarCancelButtonClicked:_searchBar];
     [self resetSearchBarText];
+    
+    [_searchBarDelegate closeButton];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    [searchBarDelegate searchBar:searchBar textDidChange:searchText];
+
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [_searchBar resignFirstResponder];
+    
+    [_searchBarDelegate newDestinationsRequest:searchBar.text];
 }
 
 @end

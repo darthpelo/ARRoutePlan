@@ -10,8 +10,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import "MBProgressHUD.h"
 #import "ARPosition.h"
+#import "ARSEarchBar.h"
 
-@interface ARSearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, MBProgressHUDDelegate>
+@interface ARSearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, ARSearchBarDelegate, MBProgressHUDDelegate>
 
 @property (copy) void (^selectPosition)(ARPosition *position);
 
