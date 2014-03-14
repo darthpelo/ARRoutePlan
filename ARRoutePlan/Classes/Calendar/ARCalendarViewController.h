@@ -11,6 +11,9 @@
 
 @interface ARCalendarViewController : UIViewController <MNCalendarViewDelegate>
 
+/**
+ *    Callback that returns the date chosen by the user.
+ */
 @property (copy) void (^selectDate)(NSString *date);
 
 @end

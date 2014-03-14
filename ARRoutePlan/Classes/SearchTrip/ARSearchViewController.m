@@ -19,8 +19,7 @@
     UITableView *_tableView;
     NSMutableArray *_tagsInSearch;
     MBProgressHUD *HUD;
-    
-    NSArray *_positionsList;
+
     NSMutableArray *_positionsInSearch;
     
     BOOL positionsListReady;
@@ -94,8 +93,8 @@
 {
     // Fake view for MBProgressHUD
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-    float fakeH = (screenHeight == 568.0f) ? 568 - KEYBOARD_OPEN : 480 - KEYBOARD_OPEN;
-    UIView *fakeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, fakeH)];
+//    float fakeH = (screenHeight == 568.0f) ? 568 - KEYBOARD_OPEN : 480 - KEYBOARD_OPEN;
+    UIView *fakeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, screenHeight)];
     [_tableView addSubview:fakeView];
     
     HUD = [[MBProgressHUD alloc] initWithView:fakeView];
@@ -110,13 +109,9 @@
         
         // reorder position by distance
         [finder findNearestPosition:responsedData userCoord:(CLLocationCoordinate2D)_locationManager.location.coordinate success:^(id responsedData) {
-            _positionsList = [[NSArray alloc] initWithArray:responsedData];
-            
-            [finder filterPositions:_positionsList byString:request result:^(id responsedData) {
-                // ordered list is ready
-                _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
-                [_tableView reloadData];
-            }];
+            // ordered list is ready
+            _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
+            [_tableView reloadData];
             
             [HUD hide:YES];
             [fakeView removeFromSuperview];
@@ -137,8 +132,8 @@
 - (void)closeButton
 {
     [self dismissViewControllerAnimated:YES completion:^(void){
-        _positionsList = nil;
         [_positionsInSearch removeAllObjects];
+        _positionsInSearch = nil;
         [_tableView reloadData];
     }];
 }

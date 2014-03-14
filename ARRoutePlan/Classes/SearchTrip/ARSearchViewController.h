@@ -14,6 +14,9 @@
 
 @interface ARSearchViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, ARSearchBarDelegate, MBProgressHUDDelegate>
 
+/**
+ *    Callback that returns the position chosed by the user.
+ */
 @property (copy) void (^selectPosition)(ARPosition *position);
 
 @end
