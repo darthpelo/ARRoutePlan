@@ -18,6 +18,8 @@
 		BE2C63C018335BAE002C5976 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C63B718335BAE002C5976 /* UIImageView+AFNetworking.m */; };
 		BE2C63C518335C35002C5976 /* ARNetworkManagment.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C63C418335C35002C5976 /* ARNetworkManagment.m */; };
 		BE2C63C818335C44002C5976 /* ARFindPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C63C718335C44002C5976 /* ARFindPosition.m */; };
+		BE5E378618D303130031AC64 /* ARNetworkManagment.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C63C418335C35002C5976 /* ARNetworkManagment.m */; };
+		BE5E378718D303180031AC64 /* ARFindPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2C63C718335C44002C5976 /* ARFindPosition.m */; };
 		BE801DFB1837E1110029173E /* ARPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = BE801DFA1837E1110029173E /* ARPosition.m */; };
 		BEADF6A61834C08800EAD955 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BEADF6A51834C08800EAD955 /* MBProgressHUD.m */; };
 		BEAF49B1183372430008EDDC /* NSString+Extra.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAF49B0183372430008EDDC /* NSString+Extra.m */; };
@@ -512,6 +514,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE5E378718D303180031AC64 /* ARFindPosition.m in Sources */,
+				BE5E378618D303130031AC64 /* ARNetworkManagment.m in Sources */,
 				BEC49DAA1832C2A100BA941F /* ARRoutePlanTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

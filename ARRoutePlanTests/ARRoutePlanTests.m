@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "ARNetworkManagment.h"
 
 @interface ARRoutePlanTests : XCTestCase
 
@@ -26,9 +27,28 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testResearch
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    // Set the flag to YES
+    __block BOOL waitingForBlock = YES;
+    
+    ARNetworkManagment *netManager = [ARNetworkManagment sharedManager];
+    
+    [netManager getPositionList:@"milan" success:^(id responsedData) {
+        // Set the flag to NO to break the loop
+        waitingForBlock = NO;
+        XCTAssertNil(responsedData, @"Error occured");
+    } failure:^(id responsedData) {
+        // Set the flag to NO to break the loop
+        waitingForBlock = NO;
+        XCTAssertFalse(TRUE, @"Attention! Error!");
+    }];
+    
+    // Run the loop
+    while(waitingForBlock) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }
 }
 
 @end
