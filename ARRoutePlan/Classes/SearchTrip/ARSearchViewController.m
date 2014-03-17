@@ -93,7 +93,6 @@
 {
     // Fake view for MBProgressHUD
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
-//    float fakeH = (screenHeight == 568.0f) ? 568 - KEYBOARD_OPEN : 480 - KEYBOARD_OPEN;
     UIView *fakeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, screenHeight)];
     [_tableView addSubview:fakeView];
     
@@ -105,22 +104,25 @@
     
     // get position from server with the first two letters
     [netManager getPositionList:[request lowercaseString] success:^(id responsedData) {
-        ARFindPosition *finder = [ARFindPosition sharedManager];
-        
-        // reorder position by distance
-        [finder findNearestPosition:responsedData userCoord:(CLLocationCoordinate2D)_locationManager.location.coordinate success:^(id responsedData) {
-            // ordered list is ready
-            _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
-            [_tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            ARFindPosition *finder = [ARFindPosition sharedManager];
             
-            [HUD hide:YES];
-            [fakeView removeFromSuperview];
-        } failure:^(id responsedData) {
-            [HUD hide:YES];
-            [fakeView removeFromSuperview];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Error occured!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-        }];
+            // reorder position by distance
+            [finder findNearestPosition:responsedData userCoord:(CLLocationCoordinate2D)_locationManager.location.coordinate success:^(id responsedData) {
+                // ordered list is ready
+                _positionsInSearch = [NSMutableArray arrayWithArray:responsedData];
+                [_tableView reloadData];
+                
+                [HUD hide:YES];
+                [fakeView removeFromSuperview];
+            } failure:^(id responsedData) {
+                [HUD hide:YES];
+                [fakeView removeFromSuperview];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention!" message:@"Error occured!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }];
+        });
+        
     } failure:^(id responsedData) {
         [HUD hide:YES];
         [fakeView removeFromSuperview];

@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "ARNetworkManagment.h"
+#import "ARFindPosition.h"
 
 @interface ARRoutePlanTests : XCTestCase
 
@@ -35,6 +36,54 @@
     ARNetworkManagment *netManager = [ARNetworkManagment sharedManager];
     
     [netManager getPositionList:@"milan" success:^(id responsedData) {
+        // Set the flag to NO to break the loop
+        waitingForBlock = NO;
+        XCTAssertNil(responsedData, @"Error occured");
+    } failure:^(id responsedData) {
+        // Set the flag to NO to break the loop
+        waitingForBlock = NO;
+        XCTAssertFalse(TRUE, @"Attention! Error!");
+    }];
+    
+    // Run the loop
+    while(waitingForBlock) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }
+}
+
+- (void)testPositionFirst
+{
+    // Set the flag to YES
+    __block BOOL waitingForBlock = YES;
+    
+    ARFindPosition *find = [ARFindPosition sharedManager];
+    
+    [find findNearestPosition:nil userCoord:CLLocationCoordinate2DMake(0.0f, 0.0f) success:^(id responsedData) {
+        // Set the flag to NO to break the loop
+        waitingForBlock = NO;
+        XCTAssertNil(responsedData, @"Error occured");
+    } failure:^(id responsedData) {
+        // Set the flag to NO to break the loop
+        waitingForBlock = NO;
+        XCTAssertFalse(TRUE, @"Attention! Error!");
+    }];
+    
+    // Run the loop
+    while(waitingForBlock) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }
+}
+
+- (void)testPositionSecond
+{
+    // Set the flag to YES
+    __block BOOL waitingForBlock = YES;
+    
+    ARFindPosition *find = [ARFindPosition sharedManager];
+    
+    [find findNearestPosition:nil userCoord:CLLocationCoordinate2DMake(0.0f, 0.0f) success:^(id responsedData) {
         // Set the flag to NO to break the loop
         waitingForBlock = NO;
         XCTAssertNil(responsedData, @"Error occured");
