@@ -14,6 +14,13 @@
 @property (nonatomic, strong) NSString *name;
 @property (assign) double distance;
 
+/**
+ *    New ARPosition istance.
+ *
+ *    @param dic The JSON of a destination.
+ *
+ *    @return ARPosition object.
+ */
 - (id)initWithDictionary:(NSDictionary *)dic;
 
 @end
